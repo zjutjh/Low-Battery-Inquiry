@@ -19,3 +19,9 @@
 
 # Go workspace file
 go.work
+/Low-Battery-Inquiry-Query/config.yaml
+/Low-Battery-Inquiry-Send/config.yaml
+
+.idea/
+/Low-Battery-Inquiry-Query/go.sum
+/Low-Battery-Inquiry-Send/go.sum

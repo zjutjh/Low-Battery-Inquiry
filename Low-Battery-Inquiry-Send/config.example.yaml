@@ -1,0 +1,20 @@
+wechat:
+  appid:
+  appsecret:
+  templateid:
+
+redis:
+  host:
+  port:
+  db:
+  password: 
+
+yxy:
+  host:
+
+database:
+  name:
+  host:
+  port:
+  user:
+  pass:
