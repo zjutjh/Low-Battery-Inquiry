@@ -61,12 +61,21 @@ func QueryRecordByUserId(userId int) (models.LowBatteryQueryRecord, error) {
 	return record, nil
 }
 
-func DeleteRecord(id int) error {
-	result := database.DB.Delete(models.LowBatteryQueryRecord{
-		ID: id,
-	})
+func DeleteRecord(uid int) error {
+	var records []models.LowBatteryQueryRecord
+	result := database.DB.Model(models.LowBatteryQueryRecord{
+		UserID: uid,
+	}).Find(&records)
 	if result.Error != nil {
 		return result.Error
+	}
+	for _, record := range records {
+		result := database.DB.Delete(models.LowBatteryQueryRecord{
+			ID: record.ID,
+		})
+		if result.Error != nil {
+			return result.Error
+		}
 	}
 	return nil
 }

@@ -24,17 +24,27 @@ func main() {
 	for _, user := range users {
 		token, err := service.Auth(user.YxyUid)
 		if err != nil {
+			err := service.DeleteRecord(user.ID)
+			if err != nil {
+				log.Println("delete record error")
+				return
+			}
 			log.Println("auth yxy error")
 			log.Println(err)
 			continue
 		}
 		electricityBalance, err := service.ElectricityBalance(*token)
 		if err != nil {
+			err := service.DeleteRecord(user.ID)
+			if err != nil {
+				log.Println("delete record error")
+				return
+			}
 			log.Println("query electricity balance error")
 			log.Println(err)
 			continue
 		}
-		if electricityBalance.Soc < 1000.0 {
+		if electricityBalance.Soc < 200.0 {
 			task, err := tasks.NewLowBatteryRemindTask(user.ID, user.WechatOpenID,
 				strconv.FormatFloat(electricityBalance.Soc, 'f', 2, 64),
 				electricityBalance.DisplayRoomName,

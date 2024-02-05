@@ -34,9 +34,11 @@ type SubData struct {
 }
 
 type Data struct {
-	Touser     string  `json:"touser"`
-	TemplateId string  `json:"template_id"`
-	Data       SubData `json:"data"`
+	Touser           string  `json:"touser"`
+	TemplateId       string  `json:"template_id"`
+	Data             SubData `json:"data"`
+	MiniprogramState string  `json:"miniprogramState"`
+	Lang             string  `json:"lang"`
 }
 
 func QueryRecords() ([]models.User, error) {
@@ -102,12 +104,10 @@ func SendInquiry(payload models.LowBatteryRemindPayload, accessToken string) err
 	if err != nil {
 		return err
 	}
-	templateId := config.Config.GetString("wechat.templateid")
 	if err != nil {
 		return err
 	}
 	params.Set("access_token", accessToken)
-	fmt.Println(payload.Address)
 	s := strings.Split(payload.Address, "层")[1]
 	if strings.HasPrefix(payload.Address, "屏峰校区") && s[0] == 'x' {
 		s = "西" + s[1:]
@@ -121,11 +121,13 @@ func SendInquiry(payload models.LowBatteryRemindPayload, accessToken string) err
 	} else if strings.HasPrefix(payload.Address, "朝晖校区") {
 		s = "梦" + s[1:]
 	}
-	data := Data{TemplateId: templateId, Touser: payload.UserOpenID, Data: SubData{
+	data := Data{TemplateId: "r4gD_xZOFZdNvAmrl2dAcwt_rF0h3BglbBgmXNN0BvQ", Touser: payload.UserOpenID, Data: SubData{
 		CharacterString1: SubSubData{Value: payload.Value},
 		Thing2:           SubSubData{Value: s},
 		Thing3:           SubSubData{Value: payload.Remark},
-	}}
+	},
+		MiniprogramState: "developer",
+		Lang:             "zh_CN"}
 	Url.RawQuery = params.Encode()
 	urlPath := Url.String()
 	f := fetch.Fetch{}
@@ -139,6 +141,6 @@ func SendInquiry(payload models.LowBatteryRemindPayload, accessToken string) err
 	if err != nil {
 		return err
 	}
-	fmt.Println(string(rune(payload.UserId)) + resp.Errmsg)
+	fmt.Println(resp.Errmsg)
 	return nil
 }

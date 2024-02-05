@@ -25,6 +25,7 @@ func HandleBatteryRemindTask(ctx context.Context, t *asynq.Task) error {
 		if err != nil {
 			log.Println("query access token error")
 			log.Println(err)
+			return err
 		}
 		config.SetAccessTokenKey(accessToken.AccessToken, accessToken.ExpiresIn)
 	}
@@ -32,21 +33,25 @@ func HandleBatteryRemindTask(ctx context.Context, t *asynq.Task) error {
 	if err != nil {
 		log.Println("redis error")
 		log.Println(err)
+		return err
 	}
 	err = service.SendInquiry(p, key)
 	if err != nil {
 		log.Println("sendPart message error")
 		log.Println(err)
+		return err
 	}
-	record, err := service.QueryRecordByUserId(p.UserId)
-	if err != nil {
-		log.Println("query record error")
-		log.Println(err)
-	}
-	err = service.DeleteRecord(record.ID)
-	if err != nil {
-		log.Println("delete record error")
-		log.Println(err)
-	}
+	//record, err := service.QueryRecordByUserId(p.UserId)
+	//if err != nil {
+	//	log.Println("query record error")
+	//	log.Println(err)
+	//	return err
+	//}
+	//err = service.DeleteRecord(record.ID)
+	//if err != nil {
+	//	log.Println("delete record error")
+	//	log.Println(err)
+	//	return err
+	//}
 	return nil
 }

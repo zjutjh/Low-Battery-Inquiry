@@ -25,3 +25,4 @@ go.work
 .idea/
 /Low-Battery-Inquiry-Query/go.sum
 /Low-Battery-Inquiry-Send/go.sum
+.DS_Store
