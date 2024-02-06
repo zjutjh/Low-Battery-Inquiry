@@ -41,17 +41,17 @@ func HandleBatteryRemindTask(ctx context.Context, t *asynq.Task) error {
 		log.Println(err)
 		return err
 	}
-	//record, err := service.QueryRecordByUserId(p.UserId)
-	//if err != nil {
-	//	log.Println("query record error")
-	//	log.Println(err)
-	//	return err
-	//}
-	//err = service.DeleteRecord(record.ID)
-	//if err != nil {
-	//	log.Println("delete record error")
-	//	log.Println(err)
-	//	return err
-	//}
+	record, err := service.QueryRecordByUserId(p.UserId)
+	if err != nil {
+		log.Println("query record error")
+		log.Println(err)
+		return err
+	}
+	err = service.DeleteRecord(record.ID)
+	if err != nil {
+		log.Println("delete record error")
+		log.Println(err)
+		return err
+	}
 	return nil
 }

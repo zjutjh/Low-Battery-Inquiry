@@ -44,7 +44,7 @@ func main() {
 			log.Println(err)
 			continue
 		}
-		if electricityBalance.Soc < 200.0 {
+		if electricityBalance.Soc < 20.0 {
 			task, err := tasks.NewLowBatteryRemindTask(user.ID, user.WechatOpenID,
 				strconv.FormatFloat(electricityBalance.Soc, 'f', 2, 64),
 				electricityBalance.DisplayRoomName,

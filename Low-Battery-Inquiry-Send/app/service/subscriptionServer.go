@@ -121,7 +121,7 @@ func SendInquiry(payload models.LowBatteryRemindPayload, accessToken string) err
 	} else if strings.HasPrefix(payload.Address, "朝晖校区") {
 		s = "梦" + s[1:]
 	}
-	data := Data{TemplateId: "r4gD_xZOFZdNvAmrl2dAcwt_rF0h3BglbBgmXNN0BvQ", Touser: payload.UserOpenID, Data: SubData{
+	data := Data{TemplateId: config.Config.GetString("wechat.templateid"), Touser: payload.UserOpenID, Data: SubData{
 		CharacterString1: SubSubData{Value: payload.Value},
 		Thing2:           SubSubData{Value: s},
 		Thing3:           SubSubData{Value: payload.Remark},
