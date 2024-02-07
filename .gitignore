@@ -21,6 +21,8 @@
 go.work
 /Low-Battery-Inquiry-Query/config.yaml
 /Low-Battery-Inquiry-Send/config.yaml
+/Low-Battery-Inquiry-Query/query
+/Low-Battery-Inquiry-Send/send
 
 .idea/
 /Low-Battery-Inquiry-Query/go.sum
